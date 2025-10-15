@@ -3,6 +3,9 @@ import csv
 import datetime
 import re
 
+TODAY = "15/09/2025"
+
+
 class User(ABC):
     """Abstract base class for library users"""
     
