@@ -34,7 +34,7 @@ def load_books(filename):
             copies = row['copies']
             title = row['title']
             author = row['author']
-            year = row['year']
+            year = row['year'].strip()
             keywords = row['keywords']
             
             book = Book(book_id, book_type, copies, title, author, year, keywords)
