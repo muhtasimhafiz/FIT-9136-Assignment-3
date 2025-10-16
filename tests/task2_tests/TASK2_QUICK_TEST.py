@@ -5,6 +5,10 @@ Run this to see a demonstration of all features
 
 import sys
 from io import StringIO
+from pathlib import Path
+
+# Add parent directory to path to import task2
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'set-1'))
 import task2
 
 print("=" * 70)
@@ -27,7 +31,13 @@ old_stdin = sys.stdin
 sys.stdin = StringIO(inputs)
 
 try:
-    task2.main('data/users.csv', 'data/books.csv', 'data/loans.csv')
+    # Use paths relative to set-1 directory
+    base_path = Path(__file__).parent.parent.parent / 'set-1' / 'data'
+    task2.main(
+        str(base_path / 'users.csv'),
+        str(base_path / 'books.csv'),
+        str(base_path / 'loans.csv')
+    )
 except SystemExit:
     pass
 finally:

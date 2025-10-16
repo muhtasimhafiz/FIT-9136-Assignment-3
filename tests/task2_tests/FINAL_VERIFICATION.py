@@ -5,6 +5,10 @@ Tests all key scenarios to ensure everything works
 
 import sys
 from io import StringIO
+from pathlib import Path
+
+# Add parent directory to path to import modules
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'set-1'))
 import task2
 import user
 import book
@@ -13,9 +17,10 @@ print("=" * 70)
 print("FINAL VERIFICATION AFTER BUG FIX")
 print("=" * 70)
 
-# Load data
-books_dict = book.load_books('data/books.csv')
-loans = task2.load_loans('data/loans.csv')
+# Load data using correct paths
+base_path = Path(__file__).parent.parent.parent / 'set-1' / 'data'
+books_dict = book.load_books(str(base_path / 'books.csv'))
+loans = task2.load_loans(str(base_path / 'loans.csv'))
 
 print("\n1. Testing fine calculation...")
 fines = task2.get_user_fines(loans, books_dict, 's31267')
@@ -24,7 +29,7 @@ print(f"   [OK] Chris Manner has ${fines:.2f} in fines")
 
 print("\n2. Testing quota with online books...")
 # Noah borrows online + physical
-test_loans = task2.load_loans('data/loans.csv')
+test_loans = task2.load_loans(str(base_path / 'loans.csv'))
 inputs = """o56799
 noa6799
 4
@@ -40,7 +45,11 @@ old_stdin = sys.stdin
 sys.stdin = StringIO(inputs)
 
 try:
-    task2.main('data/users.csv', 'data/books.csv', 'data/loans.csv')
+    task2.main(
+        str(base_path / 'users.csv'),
+        str(base_path / 'books.csv'),
+        str(base_path / 'loans.csv')
+    )
 except SystemExit:
     pass
 finally:
@@ -65,7 +74,11 @@ quit
 sys.stdin = StringIO(inputs2)
 
 try:
-    task2.main('data/users.csv', 'data/books.csv', 'data/loans.csv')
+    task2.main(
+        str(base_path / 'users.csv'),
+        str(base_path / 'books.csv'),
+        str(base_path / 'loans.csv')
+    )
 except SystemExit:
     pass
 finally:
